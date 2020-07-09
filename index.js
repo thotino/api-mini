@@ -58,4 +58,13 @@ server.post("/order", [
     dataHandlers.sendData,
 ]);
 
+server.patch("/order/:id", [
+    utils.validateHeaderContentJson,
+    utils.validateHeaderAcceptJson,
+    dataHandlers.bodyParser,
+    utils.validateBodyJson,
+    dataHandlers.updateOrder,
+    dataHandlers.sendData,
+]);
+
 server.listen(1200, console.log("listening to the port 1200..."));
