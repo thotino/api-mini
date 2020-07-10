@@ -24,6 +24,7 @@
     "url": "https://github.com/thotino/api-mini"
   },
   "scripts": {
+    "start": "node index.js",
     "test": "./node_modules/mocha/bin/mocha --reporter mocha-multi-reporters --reporter-options configFile=./test-config.json",
     "doc": "./node_modules/.bin/jsdoc -R ./README.md -c ./doc/jsdoc.json",
     "lint": "./node_modules/.bin/eslint .",
