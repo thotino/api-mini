@@ -53,16 +53,18 @@ server.post("/order", [
     utils.validateHeaderContentJson,
     utils.validateHeaderAcceptJson,
     dataHandlers.bodyParser,
+    utils.logRequestBody,
     utils.validateBodyJson,
+    dataHandlers.addDateToOrder,
     dataHandlers.createOrder,
-    dataHandlers.sendData,
+    dataHandlers.sendIntermediateData,
 ]);
 
 server.patch("/order/:id", [
     utils.validateHeaderContentJson,
     utils.validateHeaderAcceptJson,
     dataHandlers.bodyParser,
-    utils.validateBodyJson,
+    // utils.validateBodyJson,
     dataHandlers.updateOrder,
     dataHandlers.sendData,
 ]);

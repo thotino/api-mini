@@ -26,7 +26,7 @@ const user = {
 */
 const order = {
     userId: '5f05fc3b11806d3c663943bb',
-    figuresQuantity: 5,
+    figuresQuantity: 7,
 };
 
 return Promise.try(() => {
@@ -39,13 +39,13 @@ return Promise.try(() => {
         },
         body: user,
     }).then((result) => {
-        console.log(result[1]);
+        // console.log(result[1]);
         return result[1];
         
     }).then((userCreated) => {
         const orderToCreate = {
             userId: userCreated._id,
-            figuresQuantity: 5,
+            figuresQuantity: 7,
         };
         console.log(orderToCreate);
         return request.postAsync({
