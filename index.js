@@ -13,8 +13,9 @@
 //================================================================================
 // dependencies
 //================================================================================
+const Promise = global.Promise = require("bluebird");
 const restify = require("restify");
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 mongoose.Promise = global.Promise;
 
 const dataHandlers = require("./lib/handlers");
@@ -41,28 +42,28 @@ dbConnection.on('error', console.error.bind(console, 'MongoDB connection error:'
 const server = restify.createServer({});
 
 server.post("/user", [
-    utils.validateHeaderContentJson,
-    utils.validateHeaderAcceptJson,
+    utils.checkHeaderContentJson,
+    utils.checkHeaderAcceptJson,
     dataHandlers.bodyParser,
-    utils.validateBodyJson,
+    utils.checkBodyJson,
     dataHandlers.createUser,
     dataHandlers.sendData,
 ]);
 
 server.post("/order", [
-    utils.validateHeaderContentJson,
-    utils.validateHeaderAcceptJson,
+    utils.checkHeaderContentJson,
+    utils.checkHeaderAcceptJson,
     dataHandlers.bodyParser,
     utils.logRequestBody,
-    utils.validateBodyJson,
+    utils.checkBodyJson,
     dataHandlers.addDateToOrder,
     dataHandlers.createOrder,
     dataHandlers.sendIntermediateData,
 ]);
 
 server.patch("/order/:id", [
-    utils.validateHeaderContentJson,
-    utils.validateHeaderAcceptJson,
+    utils.checkHeaderContentJson,
+    utils.checkHeaderAcceptJson,
     dataHandlers.bodyParser,
     // utils.validateBodyJson,
     dataHandlers.updateOrder,
