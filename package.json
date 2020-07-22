@@ -34,7 +34,8 @@
   },
   "config": {},
   "dependencies": {
-    "amqplib": "0.5.6",
+    "bluebird": "3.7.2",
+    "lodash": "4.17.19",
     "mongoose": "5.9.22",
     "request": "2.88.2",
     "restify": "8.5.1",
