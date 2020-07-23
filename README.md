@@ -8,6 +8,11 @@ cd api-mini
 npm install
 ```
 # USE
+## PREREQUISITES
+Launch the RabbitMQ Server with Docker:
+```sh
+docker run -it --rm --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3-management
+```
 ## START
 Launch the server with this command :
 ```sh
@@ -27,9 +32,4 @@ Use these headers in all your requests:
     "Accept": "application/json",
     "Content-Type": "application/json"
 }
-```
-
-* Launch the RabbitMQ Server with Docker:
-```sh
-docker run -it --rm --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3-management
 ```
