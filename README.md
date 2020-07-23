@@ -18,6 +18,10 @@ Launch the server with this command :
 ```sh
 npm start
 ```
+or with PM2 :
+```sh
+pm2 start index.js
+```
 This server is listening on port 1200.
 
 ## REQUESTS

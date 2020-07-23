@@ -16,6 +16,7 @@
 const Promise = global.Promise = require("bluebird");
 const restify = require("restify");
 const mongoose = require("mongoose");
+
 mongoose.Promise = global.Promise;
 
 const dataHandlers = require("./lib/handlers");
@@ -33,41 +34,41 @@ const utils = require("./lib/util");
 //================================================================================
 // module
 //================================================================================
-const devDBURL = "mongodb://127.0.0.1:27017/mini-DB"
+const devDBURL = "mongodb://127.0.0.1:27017/mini-DB";
 const mongoDBURL = process.env.MONGODB_URI || devDBURL;
-mongoose.connect(mongoDBURL, { useNewUrlParser: true });
+mongoose.connect(mongoDBURL, {useNewUrlParser: true});
 const dbConnection = mongoose.connection;
-dbConnection.on('error', console.error.bind(console, 'MongoDB connection error:'));
+dbConnection.on("error", console.error.bind(console, "MongoDB connection error:"));
 
 const server = restify.createServer({});
 
 server.post("/user", [
-    utils.checkHeaderContentJson,
-    utils.checkHeaderAcceptJson,
-    dataHandlers.bodyParser,
-    utils.checkBodyJson,
-    dataHandlers.createUser,
-    dataHandlers.sendData,
+  utils.checkHeaderContentJson,
+  utils.checkHeaderAcceptJson,
+  dataHandlers.bodyParser,
+  utils.checkBodyJson,
+  dataHandlers.createUser,
+  dataHandlers.sendData,
 ]);
 
 server.post("/order", [
-    utils.checkHeaderContentJson,
-    utils.checkHeaderAcceptJson,
-    dataHandlers.bodyParser,
-    utils.logRequestBody,
-    utils.checkBodyJson,
-    dataHandlers.addDateToOrder,
-    dataHandlers.createOrder,
-    dataHandlers.sendIntermediateData,
+  utils.checkHeaderContentJson,
+  utils.checkHeaderAcceptJson,
+  dataHandlers.bodyParser,
+  // utils.logRequestBody,
+  utils.checkBodyJson,
+  dataHandlers.addDateToOrder,
+  dataHandlers.createOrder,
+  dataHandlers.sendIntermediateData,
 ]);
 
 server.patch("/order/:id", [
-    utils.checkHeaderContentJson,
-    utils.checkHeaderAcceptJson,
-    dataHandlers.bodyParser,
-    // utils.validateBodyJson,
-    dataHandlers.updateOrder,
-    dataHandlers.sendData,
+  utils.checkHeaderContentJson,
+  utils.checkHeaderAcceptJson,
+  dataHandlers.bodyParser,
+  // utils.validateBodyJson,
+  dataHandlers.updateOrder,
+  dataHandlers.sendData,
 ]);
 
 server.listen(1200, console.log("listening to the port 1200..."));
