@@ -6,7 +6,6 @@ const request = Promise.promisifyAll(require("request").defaults({jar: true}), {
   multiArgs: true,
 });
 
-
 const user = {
     firstName: "John",
     lastName: "Doe",
