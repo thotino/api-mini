@@ -1,8 +1,9 @@
 version: "3"
 services:
+
  api-mini:
   build: .
-  network_mode: host
+  # network_mode: host
   ports:
    - 1200:1200
   environment:
@@ -13,16 +14,42 @@ services:
   depends_on: 
    - mongo
    - rabbitmq
-   
+  networks: 
+    - messages-net
+    - database-net
+
+ factory-mini:
+  build: https://github.com/thotino/mini-factory-app.git
+  # network_mode: host
+  ports: 
+    - 1400:1400
+  depends_on: 
+    - rabbitmq
+  networks: 
+    - messages-net
+
  mongo:
   image: mongo
   restart: always
-  network_mode: host
+  # network_mode: host
   ports: 
    - 27017:27017
+  networks: 
+   - database-net
+
  rabbitmq:
   image: rabbitmq:3-management
+  restart: always
+  # network_mode: host
   ports: 
     - 5672:5672
     - 15672:15672
+  networks: 
+    - messages-net
+
+networks: 
+  messages-net:
+    driver: bridge
+  database-net:
+    driver: bridge
 
