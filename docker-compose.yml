@@ -1,0 +1,28 @@
+version: "3"
+services:
+ api-mini:
+  build: .
+  network_mode: host
+  ports:
+   - 1200:1200
+  environment:
+   PORT: 1200
+   MONGODB_URI: mongodb://127.0.0.1:27017/mini-DB   
+  volumes:
+   - .:/api-mini
+  depends_on: 
+   - mongo
+   - rabbitmq
+   
+ mongo:
+  image: mongo
+  restart: always
+  network_mode: host
+  ports: 
+   - 27017:27017
+ rabbitmq:
+  image: rabbitmq:3-management
+  ports: 
+    - 5672:5672
+    - 15672:15672
+
