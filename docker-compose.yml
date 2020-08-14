@@ -1,37 +1,44 @@
-version: "3"
+version: "3.8"
 services:
 
  api-mini:
   build: .
-  # network_mode: host
   ports:
    - 1200:1200
   environment:
    PORT: 1200
-   MONGODB_URI: mongodb://127.0.0.1:27017/mini-DB   
+   MONGODB_URI: mongodb://mongo:27017/mini-DB 
   volumes:
    - .:/api-mini
+  healthcheck:
+    test: ["CMD", "curl", "-f", "http://localhost:1200/health"]
+    interval: 2m
+    timeout: 30s
+    retries: 3
+    start_period: 40s
   depends_on: 
    - mongo
    - rabbitmq
   networks: 
     - messages-net
     - database-net
+  links:
+    - mongo
 
  factory-mini:
   build: https://github.com/thotino/mini-factory-app.git
-  # network_mode: host
   ports: 
     - 1400:1400
   depends_on: 
     - rabbitmq
   networks: 
     - messages-net
+  links: 
+    - rabbitmq
 
  mongo:
   image: mongo
   restart: always
-  # network_mode: host
   ports: 
    - 27017:27017
   networks: 
@@ -40,7 +47,6 @@ services:
  rabbitmq:
   image: rabbitmq:3-management
   restart: always
-  # network_mode: host
   ports: 
     - 5672:5672
     - 15672:15672
