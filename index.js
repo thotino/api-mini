@@ -39,8 +39,20 @@ const mongoDBURL = process.env.MONGODB_URI || devDBURL;
 mongoose.connect(mongoDBURL, {useNewUrlParser: true});
 const dbConnection = mongoose.connection;
 dbConnection.on("error", console.error.bind(console, "MongoDB connection error:"));
+// dbConnection.on("error", (err) => {throw err;});
+
+const port = process.env.PORT || 1200;
 
 const server = restify.createServer({});
+
+server.on("uncaughtException", function(req, res, route, err) {
+  console.log(route, err.message);
+  res.send(new Error("Internal server error"));
+});
+
+server.get("/health", (req, res) => {
+  res.json(200, {"status": "OK"});
+});
 
 server.post("/user", [
   utils.checkHeaderContentJson,
@@ -71,4 +83,4 @@ server.patch("/order/:id", [
   dataHandlers.sendData,
 ]);
 
-server.listen(1200, console.log("listening to the port 1200..."));
+server.listen(port, console.log(`listening to the port ${port}...`));
